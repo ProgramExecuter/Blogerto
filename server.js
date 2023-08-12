@@ -1,6 +1,15 @@
+// Import Packages
 import express from "express";
 
+// Import files-functions
+import apiRoutes from "./routes/index.js";
+
 const app = express();
+
+/*
+----------Attach API Routes
+*/
+app.use("/api", apiRoutes);
 
 /* 
 ----------Server Setup
