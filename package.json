@@ -1,0 +1,19 @@
+{
+  "name": "blogert-app",
+  "version": "1.0.0",
+  "description": "Blogert - A place for writing nice blogs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "blog",
+    "writing",
+    "publishing",
+    "blogert"
+  ],
+  "author": "Amit Singh Rana",
+  "license": "ISC"
+}
