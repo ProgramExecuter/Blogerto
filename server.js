@@ -6,16 +6,11 @@ import apiRoutes from "./routes/index.js";
 
 const app = express();
 
-/*
-----------Attach API Routes
-*/
+// Attach API Routes
 app.use("/api", apiRoutes);
 
-/* 
-----------Server Setup
-*/
+// Server Setup
 const PORT = process.env.PORT || 3000;
-
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });

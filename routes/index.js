@@ -7,6 +7,6 @@ import userRoutes from "./userRoutes.js";
 const router = express.Router();
 
 // Attach user routes
-router.use("/user", userRoutes);
+router.use("/users", userRoutes);
 
 export default router;
