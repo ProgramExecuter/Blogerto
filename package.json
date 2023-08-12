@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Blogert - A place for writing nice blogs",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
@@ -15,5 +16,11 @@
     "blogert"
   ],
   "author": "Amit Singh Rana",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
