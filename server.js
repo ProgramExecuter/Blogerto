@@ -6,6 +6,9 @@ import apiRoutes from "./routes/index.js";
 
 const app = express();
 
+// Middlewares
+app.use(express.json()); // To parse the form data as JSON
+
 // Attach API Routes
 app.use("/api", apiRoutes);
 
