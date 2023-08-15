@@ -12,6 +12,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Password is required"],
   },
+  jwt: String,
 });
 
 export default mongoose.model("User", userSchema);
