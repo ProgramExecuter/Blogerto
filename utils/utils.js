@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 const hashPassword = (data) => {
   const hashedData = bcrypt.hashSync(
-    process.env.BCRYPT_SECRET_KEY,
+    data,
     parseInt(process.env.BCRYPT_SALT_ROUNDS)
   );
   return hashedData;
@@ -15,4 +15,9 @@ const genJwtToken = (data) => {
   return token;
 };
 
-export { hashPassword, genJwtToken };
+const matchPassword = (password, hashedPassword) => {
+  const passMatched = bcrypt.compareSync(password, hashedPassword);
+  return passMatched;
+};
+
+export { hashPassword, genJwtToken, matchPassword };
