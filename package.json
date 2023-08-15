@@ -1,7 +1,7 @@
 {
   "name": "blogert-app",
   "version": "1.0.0",
-  "description": "Blogert - A place for writing nice blogs",
+  "description": "Blogerto - A place for writing nice blogs",
   "main": "index.js",
   "type": "module",
   "scripts": {
