@@ -13,6 +13,9 @@ const userSchema = new mongoose.Schema({
     required: [true, "Password is required"],
   },
   jwt: String,
+  name: String,
+  status: String,
+  profilePicUrl: String,
 });
 
 export default mongoose.model("User", userSchema);
