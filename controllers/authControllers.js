@@ -3,7 +3,7 @@ import User from "../models/userModel.js";
 import { genJwtToken, hashPassword, matchPassword } from "../utils/utils.js";
 
 /*
-  @ROUTE    - /api/auth/signup
+  @ROUTE    - /api/auth/signup - (POST)
   @FUNCTION - To signup user
 */
 const signupUser = async (req, res) => {
@@ -31,13 +31,13 @@ const signupUser = async (req, res) => {
 };
 
 /*
-  @ROUTE    - /api/auth/login
+  @ROUTE    - /api/auth/login - (POST)
   @FUNCTION - To login user
 */
 const loginUser = async (req, res) => {
   // Username or Password missing
   if (!req.body || !req.body.username || !req.body.password)
-    res.status(401).json({
+    return res.status(401).json({
       success: false,
       message: "Username or Password Incorrect",
     });
@@ -47,7 +47,7 @@ const loginUser = async (req, res) => {
 
   // User not found
   if (!foundUser || foundUser.length == 0)
-    res.status(401).json({
+    return res.status(401).json({
       success: false,
       message: "Username or Password Incorrect",
     });
@@ -59,7 +59,7 @@ const loginUser = async (req, res) => {
 
   // Password not matching
   if (!passMatch)
-    res.status(401).json({
+    return res.status(401).json({
       success: false,
       message: "Username or Password Incorrect",
     });
