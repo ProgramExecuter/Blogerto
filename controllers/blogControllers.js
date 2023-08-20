@@ -77,6 +77,9 @@ const editBlog = async (req, res) => {
     { returnDocument: "after" }
   );
 
+  if (!updatedBlog)
+    return res.status(404).json({ success: false, message: "Blog not found" });
+
   return res.status(200).json({
     success: true,
     message: "Blog updated",
@@ -89,7 +92,18 @@ const editBlog = async (req, res) => {
   @FUNCTION - Delete single blog
 */
 const deleteBlog = async (req, res) => {
-  return res.status(200).json(`Delete Blog - ${req.params.blogId}`);
+  // Check if blogId is valid ObjectId
+  if (!checkId(req.params.blogId))
+    return res.status(404).json({ success: false, message: "Blog not found" });
+
+  // Delete blog from DB
+  const deletedBlog = await Blog.findByIdAndDelete(req.params.blogId);
+
+  // Blog not found
+  if (!deletedBlog)
+    return res.status(404).json({ success: false, message: "Blog not found" });
+
+  return res.status(200).json({ success: true, message: "Blog Deleted" });
 };
 
 export { getAllBlogs, getSingleBlog, createNewBlog, editBlog, deleteBlog };
