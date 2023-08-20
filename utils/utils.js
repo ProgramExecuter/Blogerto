@@ -1,6 +1,7 @@
 // Import packages
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 
 const hashPassword = (data) => {
   const hashedData = bcrypt.hashSync(
@@ -20,4 +21,8 @@ const matchPassword = (password, hashedPassword) => {
   return passMatched;
 };
 
-export { hashPassword, genJwtToken, matchPassword };
+const checkId = (id) => {
+  return mongoose.isValidObjectId(id);
+};
+
+export { hashPassword, genJwtToken, matchPassword, checkId };

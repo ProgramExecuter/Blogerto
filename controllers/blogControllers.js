@@ -1,4 +1,6 @@
+// Import files-functions
 import Blog from "../models/blogModel.js";
+import { checkId } from "../utils/utils.js";
 
 /*
   @ROUTE    - /api/blogs/ - (GET)
@@ -20,6 +22,10 @@ const getAllBlogs = async (req, res) => {
   @FUNCTION - Get single blog
 */
 const getSingleBlog = async (req, res) => {
+  // Check if blogId is valid ObjectId
+  if (!checkId(req.params.blogId))
+    return res.status(404).json({ success: false, message: "Blog not found" });
+
   // Get the desired blog from DB
   const foundBlog = await Blog.findById(req.params.blogId);
 
@@ -39,7 +45,15 @@ const getSingleBlog = async (req, res) => {
   @FUNCTION - Add a new blog
 */
 const createNewBlog = async (req, res) => {
-  return res.status(200).json("Create new blog");
+  // Create and save new blog in DB
+  const newBlog = new Blog(req.body);
+  await newBlog.save();
+
+  return res.status(201).json({
+    success: true,
+    message: "New Blog Created",
+    blog: newBlog,
+  });
 };
 
 /*
