@@ -20,14 +20,12 @@ const getAllUsersDetails = async (req, res) => {
   @FUNCTION - Get single user details
 */
 const getSingleUserDetails = async (req, res) => {
-  // Get the user detials from DB
-  let foundUser = await User.find({ username: req.params.username });
+  // Get the user details from DB
+  let foundUser = await User.findOne({ username: req.params.username });
 
   // User not found
-  if (!foundUser || foundUser.length == 0)
+  if (!foundUser)
     return res.status(404).json({ status: false, message: "User not found" });
-
-  foundUser = foundUser[0];
 
   return res
     .status(200)

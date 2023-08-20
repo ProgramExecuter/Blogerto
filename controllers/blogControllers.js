@@ -5,7 +5,14 @@ import Blog from "../models/blogModel.js";
   @FUNCTION - Get all blogs
 */
 const getAllBlogs = async (req, res) => {
-  return res.status(200).json("Get all blogs");
+  // Get list of all blogs from DB
+  const blogsList = await Blog.find();
+
+  return res.status(200).json({
+    success: true,
+    message: "List of all blogs",
+    blogs: blogsList,
+  });
 };
 
 /*
@@ -13,7 +20,18 @@ const getAllBlogs = async (req, res) => {
   @FUNCTION - Get single blog
 */
 const getSingleBlog = async (req, res) => {
-  return res.status(200).json(`Get Blog - ${req.params.blogId}`);
+  // Get the desired blog from DB
+  const foundBlog = await Blog.findById(req.params.blogId);
+
+  // Blog not found
+  if (!foundBlog)
+    return res.status(404).json({ success: false, message: "Blog not found" });
+
+  return res.status(200).json({
+    success: true,
+    message: "Found Blog",
+    blog: foundBlog,
+  });
 };
 
 /*
