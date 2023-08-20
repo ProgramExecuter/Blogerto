@@ -3,6 +3,9 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import mongoose from "mongoose";
 
+// Import files-functions
+import User from "../models/userModel.js";
+
 const hashPassword = (data) => {
   const hashedData = bcrypt.hashSync(
     data,
@@ -25,4 +28,39 @@ const checkId = (id) => {
   return mongoose.isValidObjectId(id);
 };
 
-export { hashPassword, genJwtToken, matchPassword, checkId };
+const checkLoggedInUser = (req, res, next) => {
+  // Received JWT
+  const receivedJWT = req.headers.authorization.split(" ")[1];
+
+  // Verify the JWT
+  jwt.verify(receivedJWT, process.env.JWT_SECRET_KEY, async (err, data) => {
+    // Error encountered
+    if (err) {
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    } else {
+      // Username from decoded JWT
+      const loggedUser = data.username;
+
+      // Find user in DB
+      const foundUser = await User.findOne({ username: loggedUser });
+
+      // Check if user is found, if yes, then is this token theirs?
+      if (!foundUser || foundUser.jwt != receivedJWT) {
+        return res.status(401).json({
+          success: false,
+          message: "Unauthorized",
+        });
+      }
+
+      // Set a property for logged in user
+      req.loggedInUser = loggedUser;
+
+      next();
+    }
+  });
+};
+
+export { hashPassword, genJwtToken, matchPassword, checkId, checkLoggedInUser };

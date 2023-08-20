@@ -1,3 +1,4 @@
+// Import files-functions
 import User from "../models/userModel.js";
 
 /*
@@ -37,6 +38,13 @@ const getSingleUserDetails = async (req, res) => {
   @FUNCTION - Update single user details
 */
 const editUserDetails = async (req, res) => {
+  // Check if logged in user is owner of data
+  if (req.params.username != req.loggedInUser)
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized",
+    });
+
   // Editable details
   const editedDetails = {};
   editedDetails.profilePicUrl = req.body.profilePicUrl;
@@ -64,6 +72,13 @@ const editUserDetails = async (req, res) => {
   @FUNCTION - To delete a user
 */
 const deleteUser = async (req, res) => {
+  // Check if logged in user is owner of data
+  if (req.params.username != req.loggedInUser)
+    return res.status(401).json({
+      success: false,
+      message: "Unauthorized",
+    });
+
   // Find user and delete from DB
   const deletedUser = await User.findOneAndDelete({
     username: req.params.username,
