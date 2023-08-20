@@ -15,7 +15,7 @@ const hashPassword = (data) => {
 };
 
 const genJwtToken = (data) => {
-  const token = jwt.sign(data, process.env.JWT_SECRET_KEY);
+  const token = jwt.sign(data, process.env.JWT_SECRET_KEY, { expiresIn: "1d" });
   return token;
 };
 
@@ -29,6 +29,10 @@ const checkId = (id) => {
 };
 
 const checkLoggedInUser = (req, res, next) => {
+  // No token found
+  if (!req.headers.authorization)
+    return res.status(401).json({ success: false, message: "Unauthorized" });
+
   // Received JWT
   const receivedJWT = req.headers.authorization.split(" ")[1];
 

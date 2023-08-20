@@ -9,14 +9,15 @@ import {
   editBlog,
   deleteBlog,
 } from "../controllers/blogControllers.js";
+import { checkLoggedInUser } from "../utils/utils.js";
 
 const router = express.Router();
 
 // Attach all routes
 router.get("/", getAllBlogs);
-router.post("/", createNewBlog);
+router.post("/", checkLoggedInUser, createNewBlog);
 router.get("/:blogId", getSingleBlog);
-router.patch("/:blogId", editBlog);
-router.delete("/:blogId", deleteBlog);
+router.patch("/:blogId", checkLoggedInUser, editBlog);
+router.delete("/:blogId", checkLoggedInUser, deleteBlog);
 
 export default router;
