@@ -61,7 +61,27 @@ const createNewBlog = async (req, res) => {
   @FUNCTION - Edit single blog
 */
 const editBlog = async (req, res) => {
-  return res.status(200).json(`Edit Blog - ${req.params.blogId}`);
+  // Check if blogId is valid ObjectId
+  if (!checkId(req.params.blogId))
+    return res.status(404).json({ success: false, message: "Blog not found" });
+
+  // Filter to-be edited detials
+  const editedDetails = {};
+  editedDetails.title = req.body.title;
+  editedDetails.content = req.body.content;
+
+  // Update the blog in DB
+  const updatedBlog = await Blog.findByIdAndUpdate(
+    req.params.blogId,
+    editedDetails,
+    { returnDocument: "after" }
+  );
+
+  return res.status(200).json({
+    success: true,
+    message: "Blog updated",
+    blog: updatedBlog,
+  });
 };
 
 /*
